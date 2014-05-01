@@ -1,4 +1,7 @@
+package Test;
 import java.io.IOException;
+
+import Logic.Client;
 
 
 public class TestClient {

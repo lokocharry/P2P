@@ -1,3 +1,5 @@
+package Logic;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,12 +9,16 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Persistence.User;
+
+
 
 public class Client extends ServerSocket implements Messaging {
 	
 	private OutputStream out;
 	private DataOutputStream outStream;
 	private Socket s;
+	private User user;
 
 	public Client(int port) throws IOException {
 		super(port);
@@ -59,6 +65,14 @@ public class Client extends ServerSocket implements Messaging {
 
 	public Socket getS() {
 		return s;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

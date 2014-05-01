@@ -1,4 +1,7 @@
+package Test;
 import java.io.IOException;
+
+import Logic.Server;
 
 
 public class TestServer {
@@ -10,6 +13,6 @@ public class TestServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(s.readMessages(s.connectTo("", 0)));
+		s.start();
 	}
 }

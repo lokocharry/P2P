@@ -1,3 +1,4 @@
+package Logic;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
 public class Server extends ServerSocket implements Messaging {
 
 	private OutputStream out;
@@ -22,10 +24,17 @@ public class Server extends ServerSocket implements Messaging {
 	private ArrayList<Socket> clients;
 	
 	private HashMap<String, String> users;
+	
+	private Thread thread;
 
 	public Server(int port) throws IOException {
 		super(port);
 		clients=new ArrayList<>();
+		thread=new Thread(new ConnectionThread(this));
+	}
+	
+	public void start(){
+		thread.start();
 	}
 
 	@Override
@@ -88,7 +97,7 @@ public class Server extends ServerSocket implements Messaging {
 	
 	public void writeFile(String path, String line){
 		try {
-			File file = new File("files/users.txt");
+			File file = new File(path);
 			if (!file.exists()) {
 				file.createNewFile();
 			}
