@@ -1,7 +1,11 @@
+import java.net.Socket;
+
 
 public interface Messaging {
 	
-	public void sendMessage(String message);
-	public String readMessage();
+	public Socket connectTo(String ip, int port);
+	public void desconnect();
+	public void sendMessage(Socket client, String messages);
+	public String readMessages(Socket client);
 
 }
