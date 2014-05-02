@@ -8,5 +8,7 @@ public interface Messaging {
 	public void desconnect();
 	public void sendMessage(Socket client, String messages);
 	public String readMessages(Socket client);
+	public void sendObject(Object o, Socket client);
+	public Object readObject(Socket client);
 
 }

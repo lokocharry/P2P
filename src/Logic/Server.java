@@ -1,4 +1,5 @@
 package Logic;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -9,13 +10,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
 
 public class Server extends ServerSocket implements Messaging {
 
@@ -109,6 +110,32 @@ public class Server extends ServerSocket implements Messaging {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void sendObject(Object o, Socket client) {
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(client.getOutputStream());
+			out.writeObject(o);
+            out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Object readObject(Socket client) {
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(client.getInputStream());
+			return in.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 

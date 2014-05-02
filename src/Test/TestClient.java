@@ -2,6 +2,8 @@ package Test;
 import java.io.IOException;
 
 import Logic.Client;
+import Persistence.FileSystemModelSerializable;
+import Presentation.FileTreeFrame;
 
 
 public class TestClient {
@@ -15,6 +17,10 @@ public class TestClient {
 		}
 		c.connectTo("localhost", 1125);
 		c.sendMessage(c.getS(), "lokocharry");
+		System.out.println("Leyendo objeto");
+		FileSystemModelSerializable fsm=(FileSystemModelSerializable) c.readObject(c.getS());
+		System.out.println("objeto leido, creando ventana");
+		new FileTreeFrame(fsm.getFsm());
 	}
 
 }
