@@ -19,12 +19,12 @@ public class FileTreeFrame extends JFrame {
 	private FileSystemModel fileSystemModel;
 	private JTextArea fileDetailsTextArea = new JTextArea();
 
-	public FileTreeFrame(FileSystemModel fsm) {
+	public FileTreeFrame(File file) {
 		super("Visualizador de archivos");
 		
 		fileDetailsTextArea.setEditable(false);
 		
-		fileSystemModel = fsm;
+		fileSystemModel = new FileSystemModel(file);
 		
 		fileTree = new JTree(fileSystemModel);
 		fileTree.setEditable(true);

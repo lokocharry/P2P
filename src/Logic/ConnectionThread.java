@@ -3,7 +3,7 @@ package Logic;
 import java.io.File;
 import java.net.Socket;
 
-import Persistence.FileSystemModelSerializable;
+import Persistence.FileSerializable;
 
 public class ConnectionThread implements Runnable {
 	
@@ -19,7 +19,8 @@ public class ConnectionThread implements Runnable {
 			Socket c=ss.connectTo("", 0);
 			ss.writeFile("files/users.txt", c.getInetAddress()+" "+ss.readMessages(c));
 			System.out.println("Enviando objeto");
-			ss.sendObject(new FileSystemModelSerializable(new FileSystemModel(new File("C:/Program Files/Adobe/Flash Player"))), c);
+			FileSerializable fs=new FileSerializable(new File("C:/Program Files"));
+			ss.sendObject(fs, c);
 			System.out.println("Objeto enviado");
 		} while (true);
 	}
