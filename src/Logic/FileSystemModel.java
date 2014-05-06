@@ -17,6 +17,10 @@ public class FileSystemModel implements TreeModel, Serializable {
 	private File root;
 
 	private Vector<TreeModelListener> listeners = new Vector<TreeModelListener>();
+	
+	public FileSystemModel(){
+		
+	}
 
 	public FileSystemModel(File rootDirectory) {
 		root = rootDirectory;
@@ -89,6 +93,22 @@ public class FileSystemModel implements TreeModel, Serializable {
 
 	public void removeTreeModelListener(TreeModelListener listener) {
 		listeners.remove(listener);
+	}
+
+	public Vector<TreeModelListener> getListeners() {
+		return listeners;
+	}
+
+	public void setListeners(Vector<TreeModelListener> listeners) {
+		this.listeners = listeners;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setRoot(File root) {
+		this.root = root;
 	}
 
 	

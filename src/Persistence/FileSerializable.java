@@ -1,24 +1,27 @@
 package Persistence;
 
-import java.io.File;
 import java.io.Serializable;
 
+import Presentation.FileTreeFrame;
+
 public class FileSerializable implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private File file;
-	
-	public FileSerializable(File file){
-		this.file=file;
+    
+    private static final long serialVersionUID = 1L;
+    
+    private FileTreeFrame ftf;
+    
+    public FileSerializable(FileTreeFrame ftf){
+        this.ftf=ftf;
+    }
+
+	public FileTreeFrame getFtf() {
+		return ftf;
 	}
 
-	public File getFile() {
-		return file;
+	public void setFtf(FileTreeFrame ftf) {
+		this.ftf = ftf;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
-	}
+    
 
 }

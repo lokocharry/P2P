@@ -1,9 +1,9 @@
 package Logic;
 
-import java.io.File;
 import java.net.Socket;
 
-import Persistence.FileSerializable;
+import Persistence.Folder;
+import Persistence.Message;
 
 public class ConnectionThread implements Runnable {
 	
@@ -17,10 +17,17 @@ public class ConnectionThread implements Runnable {
 	public void run() {
 		do {
 			Socket c=ss.connectTo("", 0);
-			ss.writeFile("files/users.txt", c.getInetAddress()+" "+ss.readMessages(c));
+			ss.getClients().add(c);
+			String user=c.getInetAddress()+" "+ss.readMessages(c);
+			if(ss.findUser(user)==false)
+				ss.writeFile("files/users.txt", user);
+			else
+				System.out.println("Usuario ya existe");
 			System.out.println("Enviando objeto");
-			FileSerializable fs=new FileSerializable(new File("C:/Program Files"));
-			ss.sendObject(fs, c);
+			Folder f=new Folder(false, "C:/Python27");
+			f.listFilesAndFilesSubDirectories(f.getFolderName(), f);
+			Message m=new Message("Tree object", f);
+			ss.sendObject(m, c);
 			System.out.println("Objeto enviado");
 		} while (true);
 	}

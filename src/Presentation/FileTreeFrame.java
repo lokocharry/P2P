@@ -35,12 +35,13 @@ public class FileTreeFrame extends JFrame {
 			}
 		});
 		
+		fileTree.getModel().getRoot();
+		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(
 				fileTree), new JScrollPane(fileDetailsTextArea));
 		getContentPane().add(splitPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(640, 480);
-		setVisible(true);
 	}
 
 	private String getFileDetails(File file) {
@@ -51,6 +52,10 @@ public class FileTreeFrame extends JFrame {
 		buffer.append("Ruta: " + file.getPath() + "\n");
 		buffer.append("Tamaño: " + file.length() + "\n");
 		return buffer.toString();
+	}
+
+	public JTree getFileTree() {
+		return fileTree;
 	}
 
 //	public static void main(String args[]) {

@@ -13,10 +13,12 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Server extends ServerSocket implements Messaging {
 
@@ -36,6 +38,10 @@ public class Server extends ServerSocket implements Messaging {
 	
 	public void start(){
 		thread.start();
+	}
+
+	public ArrayList<Socket> getClients() {
+		return clients;
 	}
 
 	@Override
@@ -97,18 +103,10 @@ public class Server extends ServerSocket implements Messaging {
 	}
 	
 	public void writeFile(String path, String line){
-		try {
-			File file = new File(path);
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(line);
-			bw.close();
-			System.out.println("Done"); 
-		} catch (IOException e) {
-			e.printStackTrace();
+		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)))) {
+		    out.println(line+"\n");
+		}catch (IOException e) {
+		    e.printStackTrace();
 		}
 	}
 
@@ -136,6 +134,26 @@ public class Server extends ServerSocket implements Messaging {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean findUser(String user){
+		File file = new File("files/users.txt");
+		boolean result=false;
+		try {
+		    @SuppressWarnings("resource")
+			Scanner scanner = new Scanner(file);
+		    System.out.println("Comprobando usuario");
+		    while (scanner.hasNextLine()) {
+		        String line = scanner.nextLine();
+		        if(line.equals(user)) {
+		            result=true;
+		        }
+		    }
+		    System.out.println("Usuario comprobado");
+		} catch(FileNotFoundException e) { 
+		    e.printStackTrace();
+		}
+		return result;
 	}
 	
 

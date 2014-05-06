@@ -12,7 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import Persistence.User;
-
+import Presentation.UserFrame;
 
 
 public class Client extends ServerSocket implements Messaging {
@@ -21,16 +21,28 @@ public class Client extends ServerSocket implements Messaging {
 	private DataOutputStream outStream;
 	private Socket s;
 	private User user;
+	private int port;
+	private String ip;
+	private ObjectThread objectThread;
+	
+	private UserFrame userFrame;
 
-	public Client(int port) throws IOException {
-		super(port);
+	public Client(int port, UserFrame userFrame) throws IOException {
+//		super(port);
+		this.userFrame=userFrame;
 		s=new Socket();
+		this.port=port;
+		objectThread=new ObjectThread(this);
+		new Thread(objectThread).start();
+		
 	}
 
 	@Override
 	public Socket connectTo(String ip, int port) {
 		try {
+			System.out.println("Conectando");
 			s.connect(new InetSocketAddress(ip, port));
+			System.out.println("Conexión exitosa");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,6 +87,26 @@ public class Client extends ServerSocket implements Messaging {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public UserFrame getUserFrame() {
+		return userFrame;
 	}
 
 	@Override
