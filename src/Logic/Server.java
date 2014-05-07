@@ -1,12 +1,10 @@
 package Logic;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +15,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Server extends ServerSocket implements Messaging {
@@ -25,8 +22,6 @@ public class Server extends ServerSocket implements Messaging {
 	private OutputStream out;
 	private DataOutputStream outStream;
 	private ArrayList<Socket> clients;
-	
-	private HashMap<String, String> users;
 	
 	private Thread thread;
 
@@ -43,9 +38,8 @@ public class Server extends ServerSocket implements Messaging {
 	public ArrayList<Socket> getClients() {
 		return clients;
 	}
-
-	@Override
-	public Socket connectTo(String ip, int port) {
+	
+	public Socket accepConection(){
 		Socket client=null;
 		try {
 			client=this.accept();
@@ -55,6 +49,11 @@ public class Server extends ServerSocket implements Messaging {
 			e.printStackTrace();
 		}
 		return client;
+	}
+
+	@Override
+	public Socket connectTo(String ip, int port) {
+		return null;
 	}
 
 	@Override
@@ -85,22 +84,22 @@ public class Server extends ServerSocket implements Messaging {
 		return "";
 	}
 	
-	public void loadFile(String path){
-		BufferedReader br;
-		try {
-			br = new BufferedReader(new FileReader(path));
-			String line;
-			while ((line = br.readLine()) != null) {
-				String [] aux=line.split(" ");
-				users.put(aux[0], aux[1]);
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void loadFile(String path){
+//		BufferedReader br;
+//		try {
+//			br = new BufferedReader(new FileReader(path));
+//			String line;
+//			while ((line = br.readLine()) != null) {
+//				String [] aux=line.split(" ");
+//				users.put(aux[0], aux[1]);
+//			}
+//			br.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void writeFile(String path, String line){
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)))) {

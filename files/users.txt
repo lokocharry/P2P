@@ -1,4 +1,2 @@
-/127.0.0.1 Aldebaran nosenada Juegos
-
-/127.0.0.1 Tocino alguna Peliculas
+/190.252.142.200 Diego Caldas Libros
 

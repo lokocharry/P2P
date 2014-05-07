@@ -7,6 +7,7 @@ public class Message implements Serializable {
 	public final static String CONNECT_TO="connect_to";
 	public final static String TREE_SENDED="tree_sended";
 	public final static String SEND_TREE="send_tree";
+	public final static String GET_CATEGORY="get_category";
 
 	private static final long serialVersionUID = 1L;
 	

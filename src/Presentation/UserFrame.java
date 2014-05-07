@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -39,6 +40,7 @@ public class UserFrame extends JFrame {
 	
 	private Client client;
 	private JSeparator separator_1;
+	private JTextField textField_2;
 	
 	public UserFrame() {
 		getContentPane().setLayout(null);
@@ -79,29 +81,52 @@ public class UserFrame extends JFrame {
 		textField_1.setColumns(10);
 		
 		JLabel lblCategora = new JLabel("Categor\u00EDa");
-		lblCategora.setBounds(18, 205, 56, 14);
+		lblCategora.setBounds(14, 173, 56, 14);
 		panel.add(lblCategora);
 		
 		comboBox = new JComboBox<>(Category.getCategorys());
-		comboBox.setBounds(76, 202, 130, 20);
+		comboBox.setBounds(76, 170, 130, 20);
 		panel.add(comboBox);
 		
 		btnConectar = new JButton("Conectar");
-		btnConectar.setBounds(59, 122, 89, 23);
+		btnConectar.setBounds(59, 201, 89, 23);
 		btnConectar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				client.getUser().setPath(textField_2.getText());
+				client.getUser().setUserName(textField.getText());
+				client.getUser().setCategory(comboBox.getSelectedItem().toString());
 				client.connectTo(client.getIp(), client.getPort());
 				client.sendMessage(client.getS(), textField.getText()+" "+textField_1.getText()+" "+comboBox.getSelectedItem());
 			}
-			
 		});
 		panel.add(btnConectar);
 		
 		separator_1 = new JSeparator();
 		separator_1.setBounds(172, 177, -139, 14);
 		panel.add(separator_1);
+		
+		JLabel lblDirectorio = new JLabel("Directorio");
+		lblDirectorio.setBounds(79, 122, 69, 14);
+		panel.add(lblDirectorio);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(14, 140, 111, 20);
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fc=new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				fc.showOpenDialog(null);
+				textField_2.setText(fc.getSelectedFile().getAbsolutePath());
+			}
+		});
+		btnNewButton.setBounds(127, 139, 79, 23);
+		panel.add(btnNewButton);
 		
 		panel_1 = new JScrollPane();
 		panel_1.setBorder(new TitledBorder(null, "Archivos", TitledBorder.LEFT, TitledBorder.TOP, null, null));

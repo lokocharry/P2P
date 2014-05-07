@@ -28,8 +28,9 @@ public class Client extends ServerSocket implements Messaging {
 	private UserFrame userFrame;
 
 	public Client(int port, UserFrame userFrame) throws IOException {
-//		super(port);
+		super(port);
 		this.userFrame=userFrame;
+		user=new User();
 		s=new Socket();
 		this.port=port;
 		objectThread=new ObjectThread(this);
